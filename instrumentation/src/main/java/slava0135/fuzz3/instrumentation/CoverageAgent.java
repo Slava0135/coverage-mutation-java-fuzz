@@ -31,10 +31,8 @@ public class CoverageAgent {
                     public void visitLineNumber(int line, Label start) {
                         super.visitLineNumber(line, start);
                         CoverageTracker.logCoverage(name, Integer.toString(line));
-                        String lineKey = className + ":" + line;
-                        System.out.println("NAME = " + name + "LINE = " + line);
                         mv.visitLdcInsn(name);
-                        mv.visitLdcInsn(lineKey);
+                        mv.visitLdcInsn(Integer.toString(line));
                         mv.visitMethodInsn(Opcodes.INVOKESTATIC, "slava0135/fuzz3/instrumentation/CoverageTracker", "logCoverage", "(Ljava/lang/String;Ljava/lang/String;)V", false);
                     }
                 };

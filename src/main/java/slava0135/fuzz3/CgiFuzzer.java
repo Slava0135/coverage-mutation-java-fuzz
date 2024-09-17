@@ -38,15 +38,7 @@ public class CgiFuzzer extends MutationFuzzer {
             status = Status.FAIL;
         }
 
-        Set<String> newCoverage = CoverageTracker.coverage.entrySet().stream().map(it -> {
-            var sb = new StringBuilder(it.getKey());
-            for (Iterator<String> iter = it.getValue().descendingIterator(); iter.hasNext(); ) {
-                var l = iter.next();
-                sb.append(l);
-            }
-            return sb.toString();
-        }).collect(Collectors.toSet());
-
+        Set<String> newCoverage = CoverageTracker.coverage;
         if (status.equals(Status.PASS) && !coveragesSeen.contains(newCoverage)) {
             population.add(input);
             coveragesSeen.add(newCoverage);
