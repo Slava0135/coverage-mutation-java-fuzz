@@ -3,7 +3,6 @@ package slava0135.fuzz3;
 import slava0135.fuzz3.instrumentation.CoverageTracker;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CgiFuzzer extends MutationFuzzer {
     public enum Status {
@@ -34,6 +33,7 @@ public class CgiFuzzer extends MutationFuzzer {
         var status = Status.PASS;
         try {
             CgiDecoder.cgiDecode(input);
+        } catch (IllegalArgumentException ignored) {
         } catch (Exception ignored) {
             status = Status.FAIL;
         }
