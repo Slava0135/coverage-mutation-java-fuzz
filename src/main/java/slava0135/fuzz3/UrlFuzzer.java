@@ -10,7 +10,10 @@ public class UrlFuzzer extends MutationFuzzer {
         FAIL
     }
 
-    private static final List<String> defaultSeed = List.of("https://www.google.com/", "https://docs.kernel.org/process/1.Intro.html#executive-summary");
+    private static final List<String> defaultSeed = List.of(
+            "https://www.google.com/",
+            "https://docs.kernel.org/process/1.Intro.html#executive-summary"
+    );
     private static final Random random = new Random();
 
     private final Set<Set<String>> coveragesSeen = new HashSet<>();
