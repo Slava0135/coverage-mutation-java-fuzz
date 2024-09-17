@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group = 'slava0135'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':instrumentation')
+    implementation 'org.ow2.asm:asm:9.7'
+}
