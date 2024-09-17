@@ -52,7 +52,7 @@ public class CgiFuzzer extends MutationFuzzer {
             coveragesSeen.add(newCoverage);
         }
 
-        return Status.PASS;
+        return status;
     }
 
     public void runs(int count) {
@@ -73,15 +73,8 @@ public class CgiFuzzer extends MutationFuzzer {
         System.out.printf("PASSES: %d; FAILS: %d", passes, fails);
     }
 
-    @Override
-    public void reset() {
-        super.reset();
-//        coveragesSeen.clear();
-        population = new ArrayList<>(defaultSeed);
-    }
-
     public static void main(String[] args) {
-        var fuzzer = new CgiFuzzer(defaultSeed, 1, 4);
-        fuzzer.runs(100000);
+        var fuzzer = new CgiFuzzer(defaultSeed, 10, 100);
+        fuzzer.runs(1000);
     }
 }
