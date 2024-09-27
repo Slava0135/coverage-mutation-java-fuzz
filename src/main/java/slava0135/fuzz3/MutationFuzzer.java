@@ -16,10 +16,10 @@ public abstract class MutationFuzzer {
         this.seed = seed;
         this.minMutations = minMutations;
         this.maxMutations = maxMutations;
-        reset();
+        reset(seed);
     }
 
-    public void reset() {
+    public void reset(List<String> seed) {
         this.population = new ArrayList<>(seed);
         this.seedIndex = 0;
     }
