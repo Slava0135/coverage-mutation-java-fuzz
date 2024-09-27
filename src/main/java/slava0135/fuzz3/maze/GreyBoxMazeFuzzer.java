@@ -4,13 +4,20 @@ import java.util.List;
 
 public class GreyBoxMazeFuzzer {
     public static void main(String[] args) {
-        var fuzzer = new AdvancedMutationFuzzer(List.of(""), new MazeMutator(), new PowerSchedule(), 3, 10);
+        var fuzzer = new AdvancedMutationFuzzer(List.of(""), new MazeMutator(), new PowerSchedule(), 3, 5);
         var runner = new FunctionRunner(s -> {
-            return switch (MazeGenerated.maze(s)) {
+            switch (MazeGenerated.maze(s)) {
+                case "SOLVED" -> {
+                    System.out.println("SOLVED: '" + s + "'");
+                    System.exit(0);
+                    throw new Error();
+                }
                 case "INVALID" -> throw new IllegalArgumentException();
-                default -> "OK";
-            };
+                default -> {
+                    return "OK";
+                }
+            }
         });
-        fuzzer.fuzz(runner, 1000);
+        fuzzer.fuzz(runner, 10000);
     }
 }

@@ -30,7 +30,6 @@ public class CoverageAgent {
                     @Override
                     public void visitLineNumber(int line, Label start) {
                         super.visitLineNumber(line, start);
-                        CoverageTracker.logCoverage(name, Integer.toString(line));
                         mv.visitLdcInsn(name);
                         mv.visitLdcInsn(Integer.toString(line));
                         mv.visitMethodInsn(Opcodes.INVOKESTATIC, "slava0135/fuzz3/instrumentation/CoverageTracker", "logCoverage", "(Ljava/lang/String;Ljava/lang/String;)V", false);

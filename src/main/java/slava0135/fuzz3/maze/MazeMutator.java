@@ -28,7 +28,7 @@ public class MazeMutator {
         return switch (random.nextInt(3)) {
             case 0 -> append(candidate);
             case 1 -> deleteLast(candidate);
-            default -> insert(candidate);
+            default -> append(candidate);
         };
     }
 }

@@ -42,7 +42,7 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
 
         // Stacking: Apply multiple mutations to generate the candidate
         String candidate = seed.getData();
-        int trials = Math.min(candidate.length(), 1 << random.nextInt(5) + 1);
+        int trials = Math.min(minMutations, maxMutations);
         for (int i = 0; i < trials; i++) {
             candidate = mutator.mutate(candidate);
         }
@@ -60,7 +60,7 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
         }
 
         inputs.add(inp);
-        return inp;
+        return mutate(inp);
     }
 
     @Override
@@ -71,12 +71,11 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
     public Object run(FunctionRunner runner, String input) {
         FunctionRunner.Tuple<Object, String> resultOutcome = runner.run(input);
         Object result = resultOutcome.first;
-        System.err.println(runner.coverage);
         if (!coveragesSeen.containsAll(runner.coverage)) {
             System.out.println("NEW COVERAGE");
             population.add(new Seed(input));
             coveragesSeen.addAll(runner.coverage);
-            System.out.println("INPUT = " + input);
+            System.out.println("INPUT = '" + input + "'");
         }
         return result;
     }
