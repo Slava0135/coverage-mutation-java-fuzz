@@ -71,7 +71,7 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
     public Object run(FunctionRunner runner, String input) {
         FunctionRunner.Tuple<Object, String> resultOutcome = runner.run(input);
         Object result = resultOutcome.first;
-
+        System.err.println(runner.coverage);
         if (!coveragesSeen.containsAll(runner.coverage)) {
             System.out.println("NEW COVERAGE");
             population.add(new Seed(input));

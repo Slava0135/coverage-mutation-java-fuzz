@@ -14,3 +14,11 @@ dependencies {
     implementation 'org.ow2.asm:asm:9.7'
     implementation 'org.jsoup:jsoup:1.7.2'
 }
+
+task runMaze(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = "slava0135.fuzz3.maze.GreyBoxMazeFuzzer"
+    jvmArgs "-javaagent:/home/slava0135/CodeProjects/fuzz-3/instrumentation/build/libs/coverage-agent-1.0-SNAPSHOT-agent.jar"
+}
