@@ -42,7 +42,7 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
 
         // Stacking: Apply multiple mutations to generate the candidate
         String candidate = seed.getData();
-        int trials = Math.min(minMutations, maxMutations);
+        int trials = random.nextInt(minMutations, maxMutations);
         for (int i = 0; i < trials; i++) {
             candidate = mutator.mutate(candidate);
         }
@@ -60,7 +60,7 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
         }
 
         inputs.add(inp);
-        return mutate(inp);
+        return inp;
     }
 
     @Override
