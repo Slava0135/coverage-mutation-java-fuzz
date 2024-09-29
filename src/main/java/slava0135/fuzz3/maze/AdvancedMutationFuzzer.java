@@ -16,6 +16,7 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
     private Random random;
     public Set<String> coveragesSeen = new HashSet<>();
     private Monitor monitor;
+    PathIDGenerator pathIDGenerator = new PathIDGenerator();
 
     public AdvancedMutationFuzzer(
             List<String> seeds,
@@ -75,10 +76,13 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
     public Object run(FunctionRunner runner, String input) {
         var resultOutcome = runner.run(input);
         var result = resultOutcome.first;
-        if (!coveragesSeen.containsAll(runner.coverage)) {
+        var coverage = new TreeSet<>(runner.coverage);
+        var locations = coverage.stream().map(it -> Location.buildFromString(it)).collect(Collectors.toSet());
+        schedule.pathFrequency.merge(pathIDGenerator.getPathID(locations), 1, (prev, next) -> prev + next);
+        if (!coveragesSeen.containsAll(coverage)) {
             System.out.println("NEW COVERAGE");
             population.add(new Seed(input));
-            coveragesSeen.addAll(runner.coverage);
+            coveragesSeen.addAll(coverage);
             System.out.println("INPUT = '" + input + "'");
         }
         return result;
