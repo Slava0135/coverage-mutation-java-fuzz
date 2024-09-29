@@ -3,6 +3,7 @@ package slava0135.fuzz3.maze;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import slava0135.fuzz3.Monitor;
 import slava0135.fuzz3.MutationFuzzer;
 
 public class AdvancedMutationFuzzer extends MutationFuzzer {
@@ -14,17 +15,20 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
     private int seedIndex;
     private Random random;
     public Set<String> coveragesSeen = new HashSet<>();
+    private Monitor monitor;
 
     public AdvancedMutationFuzzer(
             List<String> seeds,
             MazeMutator mutator,
             PowerSchedule schedule,
+            Monitor monitor,
             int minMutations,
             int maxMutations) {
         super(seeds, minMutations, maxMutations);
         this.seeds = seeds;
         this.mutator = mutator;
         this.schedule = schedule;
+        this.monitor = monitor;
         this.inputs = new ArrayList<>();
         this.random = new Random();
         reset();
@@ -69,8 +73,8 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
     }
 
     public Object run(FunctionRunner runner, String input) {
-        FunctionRunner.Tuple<Object, String> resultOutcome = runner.run(input);
-        Object result = resultOutcome.first;
+        var resultOutcome = runner.run(input);
+        var result = resultOutcome.first;
         if (!coveragesSeen.containsAll(runner.coverage)) {
             System.out.println("NEW COVERAGE");
             population.add(new Seed(input));
@@ -82,8 +86,11 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
 
     public void fuzz(FunctionRunner runner, int trials) {
         for (int i = 0; i < trials; i++) {
-            String input = fuzz();
-            run(runner, input);
+            var input = fuzz();
+            var result = run(runner, input);
+            if (monitor.addResult(input, result)) {
+                break;
+            }
         }
     }
 

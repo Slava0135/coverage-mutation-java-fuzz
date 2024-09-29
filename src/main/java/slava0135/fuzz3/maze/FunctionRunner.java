@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import slava0135.fuzz3.instrumentation.CoverageTracker;
 
 public class FunctionRunner {
-    private static final String PASS = "PASS";
-    private static final String FAIL = "FAIL";
     private final Function<String, Object> function;
     public TreeSet<String> coverage;
 
@@ -31,18 +29,23 @@ public class FunctionRunner {
         return coverage.stream().map(Location::buildFromString).collect(Collectors.toSet());
     }
 
-    public Tuple<Object, String> run(String inp) {
+    public Tuple<Object, Outcome> run(String inp) {
         Object result;
-        String outcome;
+        Outcome outcome;
         try {
             result = runFunctionWithCoverage(inp);
-            outcome = PASS;
+            outcome = Outcome.PASS;
         } catch (Throwable e) {
             result = null;
-            outcome = FAIL;
+            outcome = Outcome.FAIL;
         }
         return new Tuple<>(result, outcome);
     }
+
+    public enum Outcome {
+        PASS,
+        FAIL
+    } 
 
     public static class Tuple<T, U> {
         public final T first;
@@ -52,19 +55,5 @@ public class FunctionRunner {
             this.first = first;
             this.second = second;
         }
-    }
-
-    public static void main(String[] args) {
-        Function<String, Object> func = s -> {
-            if (s.equals("error")) throw new RuntimeException("Test exception");
-            return s.toUpperCase();
-        };
-
-        FunctionRunner runner = new FunctionRunner(func);
-        Tuple<Object, String> result = runner.run("test");
-        System.out.println("Result: " + result.first + ", Outcome: " + result.second);
-
-        result = runner.run("error");
-        System.out.println("Result: " + result.first + ", Outcome: " + result.second);
     }
 }
