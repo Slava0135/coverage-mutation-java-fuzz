@@ -19,7 +19,7 @@ public class GreyBoxMazeFuzzer {
             }
             return res;
         });
-        fuzzer.fuzz(runner, 10000);
+        fuzzer.fuzz(runner, 30000);
         monitor.printStats();
     }
 }
