@@ -4,6 +4,7 @@ import org.objectweb.asm.*;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.ClassFileTransformer;
 import java.security.ProtectionDomain;
+import java.util.HashSet;
 
 public class CoverageAgent {
     public static void premain(String agentArgs, Instrumentation inst) {
@@ -37,7 +38,25 @@ public class CoverageAgent {
                 };
             }
         };
+        var cv2 = new ClassVisitor(Opcodes.ASM9) {
+            @Override
+            public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
+                return new MethodVisitor(Opcodes.ASM9) {
+                    final String methodName = name;
+                    @Override
+                    public void visitMethodInsn(final int opcode, final String owner, final String name, final String descriptor, final boolean isInterface) {
+                        var v = CallGraph.graph.get(methodName);
+                        if (v == null) {
+                            v = new HashSet<String>();
+                        }
+                        v.add(name);
+                        CallGraph.graph.put(methodName, v);
+                    }
+                };
+            }
+        };
         cr.accept(cv, 0);
+        cr.accept(cv2, 0);
         return cw.toByteArray();
     }
 }
