@@ -48,8 +48,6 @@ public class CallGraph {
                 }
             }
         }
-        System.out.println(distance);
-        System.out.println();
     }
 
     public static int getDistance(String from, String to) {
