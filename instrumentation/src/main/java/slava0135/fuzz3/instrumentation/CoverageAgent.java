@@ -57,6 +57,7 @@ public class CoverageAgent {
         };
         cr.accept(cv, 0);
         cr.accept(cv2, 0);
+        CallGraph.cacheDistance();
         return cw.toByteArray();
     }
 }
