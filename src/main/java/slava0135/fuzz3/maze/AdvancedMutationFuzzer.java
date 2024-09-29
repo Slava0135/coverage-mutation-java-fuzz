@@ -83,7 +83,9 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
         schedule.pathFrequency.merge(pathIDGenerator.getPathID(locations), 1, (prev, next) -> prev + next);
         if (outcome == Outcome.PASS && !coveragesSeen.containsAll(coverage)) {
             System.out.println("NEW COVERAGE");
-            population.add(new Seed(input));
+            var seed = new Seed(input);
+            seed.setCoverage(locations);
+            population.add(seed);
             coveragesSeen.addAll(coverage);
             System.out.println("INPUT = '" + input + "'");
         }
