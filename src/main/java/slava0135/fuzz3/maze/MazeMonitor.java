@@ -10,11 +10,12 @@ class MazeMonitor implements Monitor {
 
     @Override
     public boolean addResult(String input, Object result) {
+        if (result == null) {
+            invalid++;
+            return false;
+        }
         if (result instanceof String out) {
-            if (out.toLowerCase().contains("invalid")) {
-                invalid++;
-                return false;
-            } else if (out.toLowerCase().contains("valid")) {
+            if (out.toLowerCase().contains("valid")) {
                 valid++;
                 return false;
             } else if (out.toLowerCase().contains("solved")) {

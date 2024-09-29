@@ -13,7 +13,11 @@ public class GreyBoxMazeFuzzer {
             1, 3
         );
         var runner = new FunctionRunner(s -> {
-            return MazeGenerated.maze(s);
+            var res = MazeGenerated.maze(s);
+            if (res.toLowerCase().contains("invalid")) {
+                throw new IllegalArgumentException();
+            }
+            return res;
         });
         fuzzer.fuzz(runner, 100000);
         monitor.printStats();
