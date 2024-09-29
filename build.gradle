@@ -15,8 +15,14 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.7.2'
 }
 
-task runMaze(type: JavaExec) {
+task runMazeGreyBox(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = "slava0135.fuzz3.maze.GreyBoxMazeFuzzer"
+    jvmArgs "-javaagent:$projectDir/instrumentation/build/libs/coverage-agent-1.0-SNAPSHOT-agent.jar"
+}
+
+task runMazeBoostedGreyBox(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = "slava0135.fuzz3.maze.BoostedGreyBoxMazeFuzzer"
     jvmArgs "-javaagent:$projectDir/instrumentation/build/libs/coverage-agent-1.0-SNAPSHOT-agent.jar"
 }

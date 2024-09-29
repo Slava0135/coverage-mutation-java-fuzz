@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import slava0135.fuzz3.Monitor;
 import slava0135.fuzz3.MutationFuzzer;
+import slava0135.fuzz3.maze.FunctionRunner.Outcome;
 
 public class AdvancedMutationFuzzer extends MutationFuzzer {
     public List<String> seeds;
@@ -76,10 +77,11 @@ public class AdvancedMutationFuzzer extends MutationFuzzer {
     public Object run(FunctionRunner runner, String input) {
         var resultOutcome = runner.run(input);
         var result = resultOutcome.first;
+        var outcome = resultOutcome.second;
         var coverage = new TreeSet<>(runner.coverage);
-        var locations = coverage.stream().map(it -> Location.buildFromString(it)).collect(Collectors.toSet());
+        var locations = coverage.stream().map(Location::buildFromString).collect(Collectors.toSet());
         schedule.pathFrequency.merge(pathIDGenerator.getPathID(locations), 1, (prev, next) -> prev + next);
-        if (!coveragesSeen.containsAll(coverage)) {
+        if (outcome == Outcome.PASS && !coveragesSeen.containsAll(coverage)) {
             System.out.println("NEW COVERAGE");
             population.add(new Seed(input));
             coveragesSeen.addAll(coverage);
