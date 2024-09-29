@@ -26,3 +26,9 @@ task runMazeBoostedGreyBox(type: JavaExec) {
     main = "slava0135.fuzz3.maze.BoostedGreyBoxMazeFuzzer"
     jvmArgs "-javaagent:$projectDir/instrumentation/build/libs/coverage-agent-1.0-SNAPSHOT-agent.jar"
 }
+
+task runMazeDirectedGreyBox(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = "slava0135.fuzz3.maze.DirectedGreyBoxMazeFuzzer"
+    jvmArgs "-javaagent:$projectDir/instrumentation/build/libs/coverage-agent-1.0-SNAPSHOT-agent.jar"
+}

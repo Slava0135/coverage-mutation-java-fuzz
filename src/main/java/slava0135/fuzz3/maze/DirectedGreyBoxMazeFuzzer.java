@@ -2,13 +2,15 @@ package slava0135.fuzz3.maze;
 
 import java.util.List;
 
-public class GreyBoxMazeFuzzer {
+import slava0135.fuzz3.instrumentation.CallGraph;
+
+public class DirectedGreyBoxMazeFuzzer {
     public static void main(String[] args) {
         var monitor = new MazeMonitor();
         var fuzzer = new AdvancedMutationFuzzer(
             List.of(""),
             new MazeMutator(),
-            new PowerSchedule(),
+            new DirectedPowerSchedule(),
             monitor,
             1, 3
         );
@@ -21,5 +23,6 @@ public class GreyBoxMazeFuzzer {
         });
         fuzzer.fuzz(runner, 10000);
         monitor.printStats();
+        // System.out.println(CallGraph.getDistance("tile_1_1", "tile_5_7"));
     }
 }

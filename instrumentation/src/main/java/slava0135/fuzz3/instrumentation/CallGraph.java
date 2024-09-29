@@ -5,6 +5,7 @@ import java.util.*;
 public class CallGraph {
     public static Map<String, Set<String>> graph = new HashMap<>();
     public static Map<Edge, Integer> distance = new HashMap<>();
+    public static int nodeCount;
     
     public record Edge(String from, String to) {}
 
@@ -15,6 +16,7 @@ public class CallGraph {
             allMethods.add(it.getKey());
             allMethods.addAll(it.getValue());
         });
+        nodeCount = allMethods.size();
         for (var from : allMethods) {
             for (var to : allMethods) {
                 if (from == to) {
@@ -50,7 +52,7 @@ public class CallGraph {
         }
     }
 
-    public static int getDistance(String from, String to) {
-        return -1;
+    public static double getDistance(String from, String to) {
+        return (double) distance.getOrDefault(new Edge(from, to), -1);
     }
 }
