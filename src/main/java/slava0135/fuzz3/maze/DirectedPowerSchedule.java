@@ -25,10 +25,9 @@ public class DirectedPowerSchedule extends PowerSchedule {
             if (numDist == 0) {
                 seed.setDistance(maxDistance);
             } else {
-                seed.setDistance(sumDist / numDist);
+                seed.setDistance((double) sumDist / numDist);
             }
-            seed.setDistance(functions.stream().map(it -> CallGraph.getDistance(it, target)).min(Double::compare).orElseGet(() -> maxDistance));
-            seed.setEnergy(Math.pow(1 / seed.getDistance(), 1.2)); 
+            seed.setEnergy(Math.pow(1 / seed.getDistance(), 2)); 
         }
     }
 }
