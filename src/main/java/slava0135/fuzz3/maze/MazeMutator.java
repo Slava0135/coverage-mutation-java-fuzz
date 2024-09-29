@@ -20,6 +20,9 @@ public class MazeMutator {
     }
 
     private static String insert(String input) {
+        if (input.isEmpty()) {
+            return input;
+        }
         var splitIndex = random.nextInt(input.length());
         return input.substring(0, splitIndex) + randomDir() + input.substring(splitIndex, input.length());
     }
@@ -28,7 +31,7 @@ public class MazeMutator {
         return switch (random.nextInt(3)) {
             case 0 -> append(candidate);
             case 1 -> deleteLast(candidate);
-            default -> append(candidate);
+            default -> insert(candidate);
         };
     }
 }
