@@ -13,6 +13,7 @@ dependencies {
     implementation project(':instrumentation')
     implementation 'org.ow2.asm:asm:9.7'
     implementation 'org.jsoup:jsoup:1.7.2'
+    implementation 'com.github.javaparser:javaparser-core:3.26.2'
 }
 
 task runMazeGreyBox(type: JavaExec) {
@@ -33,9 +34,13 @@ task runMazeDirectedGreyBox(type: JavaExec) {
     jvmArgs "-javaagent:$projectDir/instrumentation/build/libs/coverage-agent-1.0-SNAPSHOT-agent.jar"
 }
 
-
 task runMazeAdvancedDirectedGreyBox(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = "slava0135.fuzz3.maze.AdvancedDirectedGreyBoxMazeFuzzer"
     jvmArgs "-javaagent:$projectDir/instrumentation/build/libs/coverage-agent-1.0-SNAPSHOT-agent.jar"
+}
+
+task runTriangleCalculatorTests(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = "slava0135.fuzz3.mutation.TriangleCalculatorTests"
 }

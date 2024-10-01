@@ -1,4 +1,4 @@
-package slava0135.fuzz3.maze;
+package slava0135.fuzz3;
 
 public class Location {
     public String filename;

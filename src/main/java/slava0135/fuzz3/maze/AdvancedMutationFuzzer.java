@@ -3,6 +3,7 @@ package slava0135.fuzz3.maze;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import slava0135.fuzz3.Location;
 import slava0135.fuzz3.Monitor;
 import slava0135.fuzz3.MutationFuzzer;
 import slava0135.fuzz3.maze.FunctionRunner.Outcome;

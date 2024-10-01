@@ -3,6 +3,8 @@ package slava0135.fuzz3.maze;
 import java.util.HashSet;
 import java.util.Set;
 
+import slava0135.fuzz3.Location;
+
 public class Seed {
     private String data;
     public Set<Location> coverage;

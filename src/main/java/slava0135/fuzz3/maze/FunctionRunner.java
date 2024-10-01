@@ -5,6 +5,7 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import slava0135.fuzz3.Location;
 import slava0135.fuzz3.instrumentation.CoverageTracker;
 
 public class FunctionRunner {
