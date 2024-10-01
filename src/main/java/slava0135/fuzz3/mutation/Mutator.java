@@ -2,7 +2,6 @@ package slava0135.fuzz3.mutation;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 
 public abstract class Mutator extends ModifierVisitor<Void> {

@@ -5,7 +5,7 @@ import com.github.javaparser.ast.expr.NullLiteralExpr;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.visitor.Visitable;
 
-public class ReturnMutator extends Mutator{
+public class ReturnMutator extends Mutator {
     public ReturnMutator(int mutationLocation) {
         super(mutationLocation);
     }
