@@ -26,13 +26,15 @@ public class DataGrammar {
 
     public static final LinkedHashMap<String, List<String>> DATA_GRAMMAR = new LinkedHashMap<>() {
         {
-            put("<document>", Arrays.asList("<element>", "<element><document>"));
+            put("<document>", Arrays.asList("<element>", "<element>\n<document>"));
             put("<element>", Arrays.asList("<key_value>", "<block>", "<comment>"));
+            put("<basic_element>", Arrays.asList("<key_value>", "<comment>"));
             put("<key_value>", Arrays.asList("<key>:<value>"));
             put("<key>", Arrays.asList("<identifier>"));
             put("<value>", Arrays.asList("<string>", "<number>", "<boolean>", "<array>", "<block>"));
-            put("<block>", Arrays.asList("<key>{\n<elements>\n}"));
+            put("<block>", Arrays.asList("<key>{\n<basic_elements>\n}"));
             put("<elements>", Arrays.asList("<element>", "<element>\n<elements>"));
+            put("<basic_elements>", Arrays.asList("<basic_element>", "<basic_element>\n<basic_elements>"));
             put("<array>", Arrays.asList("[<array_elements>]"));
             put("<array_elements>", Arrays.asList("<string>", "<string>,<array_elements>"));
             put("<comment>", Arrays.asList("#<text>"));
