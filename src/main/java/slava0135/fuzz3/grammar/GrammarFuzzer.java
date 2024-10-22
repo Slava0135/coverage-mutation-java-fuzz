@@ -103,9 +103,9 @@ public class GrammarFuzzer {
     public DerivationTreeNode expandNodeRandomly(DerivationTreeNode node) {
         assert node.getChildren() == null;
 
-//        if (log) {
+        if (log) {
             System.out.println("Expanding " + node.allTerminals() + " randomly");
-//        }
+        }
 
         List<Expansion> expansions = grammar.rules.get(node.getValue());
         List<List<DerivationTreeNode>> childrenAlternatives = new ArrayList<>();
@@ -200,7 +200,9 @@ public class GrammarFuzzer {
         }
 
         List<Expansion> expansions = grammar.rules.get(symbol);
-        System.out.println(symbol);
+        if (log) {
+            System.out.println(symbol);
+        }
         Set<String> finalSeen = seen;
         return expansions.stream()
                 .mapToInt(e -> expansionCost(e, new HashSet<>(finalSeen) {{
@@ -264,16 +266,16 @@ public class GrammarFuzzer {
     }
 
     public DerivationTreeNode expandNodeMinCost(DerivationTreeNode node) {
-//        if (log) {
+        if (log) {
             System.out.println("Expanding " + node.allTerminals() + " at min cost");
-//        }
+        }
         return expandNodeByCost(node, Integer::compareTo).getRoot();
     }
 
     public DerivationTreeNode expandNodeMaxCost(DerivationTreeNode node) {
-//        if (log) {
-        System.out.println("Expanding " + node.allTerminals() + " at max cost");
-//        }
+        if (log) {
+            System.out.println("Expanding " + node.allTerminals() + " at max cost");
+        }
         return expandNodeByCost(node, (o1, o2) -> -o1.compareTo(o2)).getRoot();
     }
 
